@@ -12,4 +12,5 @@ function _detail($serial = '')
 	$controller->set('serial', $serial);
 	$controller->set('machine', new Machine($serial));
 	$controller->set('report', new Reportdata($serial));
+	$controller->set('warranty', new Warranty($serial));
 }

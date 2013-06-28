@@ -13,7 +13,8 @@
 <?php View::do_dump('partials/machine_info.php', array(
   'report_type' => $report_type,
   'machine' => $machine,
-  'report' => $report
+  'report' => $report,
+  'warranty' => $warranty
 ));?>
 
 
