@@ -1,5 +1,5 @@
-<?$client = new Munkireport($machine['serial_number'])?>
-<?$report = $client->report_plist?>
+
+<?$report = $machine->report_plist?>
 
 <?if( ! $report):?>
 	<p><i>No Munkireport data</i></p>
@@ -21,7 +21,7 @@
 	</tr>
 	<tr>
 		<th>Console User:</th>
-		<td><?=$client->console_user?></td>
+		<td><?=$machine->rs['console_user']?></td>
 	</tr>
 	<tr>
 		<th>Start:</th>

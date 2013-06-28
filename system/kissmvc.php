@@ -1,39 +1,36 @@
 <?php
 require('kissmvc_core.php');
 
-//===============================================================
-// Engine
-//===============================================================
-class Engine extends KISS_Engine
-{
-	function __construct( &$routes, $default_controller, $default_action, $uri_protocol = 'AUTO')
-    {
-        $GLOBALS[ 'engine' ] = $this;
-
-        parent::__construct( $routes, $default_controller, $default_action, $uri_protocol);
-
-    }
-
-	function request_not_found( $msg='' ) 
-	{
-		header( "HTTP/1.0 404 Not Found" );
-				
-		die( '<html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL was not found on this server.</p><p>Please go <a href="javascript: history.back( 1 )">back</a> and try again.</p><hr /><p>Powered By: <a href="http://kissmvc.com">KISSMVC</a></p></body></html>' );
-	}
-
-	function get_uri_string()
-    {
-        return $this->uri_string;
-    }
-	
-}
 
 //===============================================================
 // Controller
 //===============================================================
 class Controller extends KISS_Controller 
 {
-	
+	public function before_route()
+	{
+		$controller = KISS_Controller::get_instance();
+		$actionName = $controller->action;
+		$controllerName = $controller->controller;
+		$allowed_routes = array(
+			"install/index",
+			"install/script",
+			"install/plist",
+			"report/hash_check",
+			"report/check_in",
+			"auth/index"
+		);
+		$current_route = $controller->controller . '/' . $controller->action;
+
+		$session_exists = isset($_SESSION['user']) && isset($_SESSION['auth']);
+		
+		if (in_array($current_route, $allowed_routes))
+			return;
+
+		// redirect the unauthenticated masses to the login page
+		if ( ! $session_exists && $controllerName != "auth")
+			$controller->redirect('auth');
+	}
 }
 
 //===============================================================

@@ -68,36 +68,19 @@ date_default_timezone_set( Config::get('timezone') );
 //set_exception_handler('uncaught_exception_handler');
 
 //===============================================
-// Quick permissions check for sqlite operations
-//===============================================
-if (strpos( Config::get('pdo.dsn'), "sqlite") === 0) {
-	$dsnParts = explode(":", Config::get('pdo.dsn'));
-	$dbPath = $dsnParts[1];
-	$dbDir = dirname($dbPath);
-	$errors = FALSE;
-	if (!is_writable($dbDir)) {
-		echo "Database directory isn't writable by the webserver";
-		debug(" - " . $dbDir);
-		echo "<br />";
-		$errors = TRUE;
-	}
-	if (file_exists($dbPath) && !is_writable($dbPath)) {
-		echo "Database isn't writable by the webserver";
-		debug(" - " . $dbPath);
-		$errors = TRUE;
-	}
-	if ($errors == TRUE)
-		exit;
-}
-
-//===============================================
 // Start the controller
 //===============================================
 $routes = Config::get('routes');
 $uri_protocol = Config::get('uriProtocol');
+$controller = new Controller(
+	APP_PATH . "controllers/",
+	WEB_FOLDER,
+	'dashboard',
+	'index');
+/*
 $GLOBALS[ 'engine' ] = new Engine(
 	$routes,
 	'show',
 	'index',
 	$uri_protocol
-);
+);*/

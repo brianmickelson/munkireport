@@ -26,12 +26,12 @@ $(function(){
 			.attr("id", id)
 			.text("Loading...")
 			.css({
-				"height": 225,
+				"height": 200,
 				"width": 250
-			});
+			})
 
 		$.ajax({
-			url: window.location.pathname + "/detail/" + serialNumber + ".json",
+			url: window.location.pathname.replace(/index$/, '') + "/detail/" + serialNumber + ".json",
 			success: function(response) {
 				formatResponse(response, id);
 			},
@@ -59,8 +59,8 @@ $(function(){
 		}
 
 		var img = $("<center>").append($("<img>")
-						.attr('src', response.meta.iconURL)
-						.css("height", "100px"),
+						.attr('src', response.machine.img_url)
+						.css("height", "72px"),
 					$("<hr>")
 				),
 			cpu = generateReportItem(
@@ -84,9 +84,11 @@ $(function(){
 
 	function generateReportItem(title, value)
 	{
-		return $("<div></div>").append(
-			$("<b></b>").text(title + " "),
-			$("<span></span>").text(value)
+		return $("<small></small>").append(
+			$("<div></div>").append(
+				$("<b></b>").text(title + " "),
+				$("<span></span>").text(value)
+			)
 		);
 	}
 });

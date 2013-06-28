@@ -19,7 +19,17 @@ class Inventoryitem extends Model {
 
 		// Create table if it does not exist
         $this->create_table();
-    }    
+    }
+
+
+    public function all_versions($name = "")
+    {
+        return $this->select(
+            "version, COUNT(version) AS num",
+            "name = ? GROUP BY version",
+            array($name)
+        );
+    }
         
     function delete_set( $serial ) 
     {
