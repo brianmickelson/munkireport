@@ -36,21 +36,21 @@
 				<dl class="dl-horizontal">
 					<dt>Software</dt>
 					<dd>OS X <?=@$machine->rs['os_version'] . ' ('
-							. @$machine->rs['cpu_arch'] . ')'?></dd>
+							. @$machine->rs['cpu_arch'] . ')'?>&nbsp;</dd>
 					<dt>CPU Speed</dt>
 					<dd><?=@$machine->rs['current_processor_speed']?> ( <?php echo @$machine->rs['number_processors'];?> core )</dd>
 					<dt>Serial Number</dt>
-					<dd><?php echo @$machine->rs['serial_number'];?></dd>
+					<dd><?php echo @$machine->rs['serial_number'];?>&nbsp;</dd>
 					<dt>SMC Version</dt>
-					<dd><?php echo @$machine->rs['SMC_version_system'];?></dd>
+					<dd><?php echo @$machine->rs['SMC_version_system'];?>&nbsp;</dd>
 					<dt>Boot ROM</dt>
-					<dd><?php echo @$machine->rs['boot_rom_version'];?></dd>
+					<dd><?php echo @$machine->rs['boot_rom_version'];?>&nbsp;</dd>
 					<dt>Memory</dt>
-					<dd><?php echo @$machine->rs['physical_memory'];?></dd>
+					<dd><?php echo @$machine->rs['physical_memory'];?>&nbsp;</dd>
 					<dt>Hardware UUID</dt>
-					<dd><?php echo @$machine->rs['platform_UUID'];?></dd>
+					<dd><?php echo @$machine->rs['platform_UUID'];?>&nbsp;</dd>
 					<dt>Remote IP Address</dt>
-					<dd><?php echo $report->rs['remote_ip'];?></dd>
+					<dd><?php echo $report->rs['remote_ip'];?>&nbsp;</dd>
 				</dl>
 			</small>
 		</div>
