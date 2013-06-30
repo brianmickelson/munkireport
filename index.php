@@ -77,10 +77,3 @@ $controller = new Controller(
 	WEB_FOLDER,
 	'dashboard',
 	'index');
-/*
-$GLOBALS[ 'engine' ] = new Engine(
-	$routes,
-	'show',
-	'index',
-	$uri_protocol
-);*/

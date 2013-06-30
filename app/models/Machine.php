@@ -5,7 +5,8 @@ class Machine extends Model {
 	{
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
 		$this->rs['id'] = '';
-		$this->rs['serial_number'] = $serial; $this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
+		$this->rs['serial_number'] = $serial;
+			$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['hostname'] = '';
 		$this->rs['machine_model'] = '';
 		$this->rs['machine_desc'] = '';
