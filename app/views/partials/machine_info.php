@@ -15,12 +15,12 @@
 					if ($warranty->rs['status'] == "Supported")
 					{
 						echo "<span class='text-success'>Supported until "
-							. $warranty->rs['end_date'] . "</span>";
+							. strftime('%x', strtotime($warranty->rs['end_date'])) . "</span>";
 					}
 					else
-						echo "<span class='text-error'>Expired on "
-							. $warranty->rs['end_date'] . "</span>";
+						echo "<span class='text-error'>Expired</span>";
 				?>
+				<br />Current User: <?php echo htmlentities($report->rs['long_username']);?>
 				</small>
 				<hr />
 				<a class="btn btn-mini" href="<?php echo url('clients/recheck_warranty/' . $machine->rs['serial_number']);?>">
