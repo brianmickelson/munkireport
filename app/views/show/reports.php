@@ -44,7 +44,7 @@
 	<td><?=$report_data->rs['remote_ip']?></td>
 	<td><?=$machine->rs['os_version']?> <?=$machine->rs['cpu_arch']?></td>
 	<td>
-		<?=RelativeTime($report_data->rs['timestamp'] / 1000) . " ago ";?>
+		<?=time_relative_to_now($report_data->rs['timestamp']);?>
 		<?=$report_data->rs['runtype']?>
 		<?=$report_data->rs['runstate']?>
 		<?if($report->rs['report_plist']['Errors']):?>

@@ -3,16 +3,6 @@
 // Munkireport version (last number is number of commits)
 $GLOBALS['version'] = '0.8.3.57';
 
-//===============================================
-// Uncaught Exception Handling
-//===============================================s
-function uncaught_exception_handler($e)
-{
-  ob_end_clean(); //dump out remaining buffered text
-  $vars['message']=$e;
-  die(View::do_fetch(APP_PATH.'errors/exception_uncaught.php',$vars));
-}
-
 function custom_error($msg='') 
 {
 	$vars['msg']=$msg;
@@ -84,36 +74,56 @@ function humanreadablesize($bytes, $decimals = 2) {
 	return sprintf("%.{$decimals}f %sB", $bytes / pow(1024, $factor), $factor?@$sz[$factor]:' ');
 }
 
+
+
+
+function time_relative_to_now($seconds)
+{
+	$time = time() - $seconds;
+	$relative_time = RelativeTime($time);
+
+	// Time is in the past
+	if ($time > 0)
+	{
+		return $relative_time . " ago";
+	}
+	else
+	{
+		return $relative_time;
+	}
+}
+
 function RelativeTime($time) 
-{ 
-    $points = array(
-            'year'     => 31556926,
-            'month'    => 2629743,
-            'week'     => 604800,
-            'day'      => 86400,
-            'hour'     => 3600,
-            'minute'   => 60,
-            'second'   => 1
-        );
-    $plurals = array( 
-    		'year'		=> 'years',
-    		'month'		=> 'months',
-    		'week'		=> 'weeks',
-    		'day'		=> 'days',
-    		'hour'		=> 'hours',
-    		'minute'	=> 'minutes',
-    		'second'	=> 'seconds'
-    		);
-        
-        foreach($points as $point => $value)
-        {
-            $elapsed = floor($time/$value);
-            if($elapsed > 0)
-            {
-                $point = $elapsed > 1 ? $plurals[$point] : $point;
-                return "$elapsed $point";
-            }
-        }
+{
+	$points = array(
+		'year'     => 31556926,
+		'month'    => 2629743,
+		'week'     => 604800,
+		'day'      => 86400,
+		'hour'     => 3600,
+		'minute'   => 60,
+		'second'   => 1
+	);
+	$plurals = array( 
+		'year'		=> 'years',
+		'month'		=> 'months',
+		'week'		=> 'weeks',
+		'day'		=> 'days',
+		'hour'		=> 'hours',
+		'minute'	=> 'minutes',
+		'second'	=> 'seconds'
+	);
+
+	foreach($points as $point => $value)
+	{
+		$elapsed = floor($time/$value);
+		if($elapsed > 0)
+		{
+			$point = $elapsed > 1 ? $plurals[$point] : $point;
+			return "$elapsed $point";
+		}
+	}
+	return "0 seconds";
 }
 
 
