@@ -70,6 +70,15 @@ class Model extends KISS_Model
 		if ( is_scalar( $bindings ) )
 			$bindings=$bindings ? array( $bindings ) : array();
 		$stmt = $dbh->prepare( $sql );
+
+
+		// Check for errors and throw them up the exception chain if found
+		if ($stmt === FALSE)
+		{
+			$err = $dbh->errorInfo();
+			throw new RuntimeException($err[2], $err[1]);
+		}
+		
 		$stmt->execute( $bindings );
 		$arr=array();
 		while ( $rs = $stmt->fetch( PDO::FETCH_OBJ ) )
