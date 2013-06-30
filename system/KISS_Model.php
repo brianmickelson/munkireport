@@ -168,8 +168,7 @@ abstract class KISS_Model  {
 		if (!is_array($arr))
 			return $this;
 		foreach ($arr as $key => $val)
-			if (isset($this->rs[$key]))
-				$this->rs[$key] = $val;
+			$this->set($key, $val);
 		return $this;
 	}
 
