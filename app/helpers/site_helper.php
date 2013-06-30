@@ -80,7 +80,7 @@ function humanreadablesize($bytes, $decimals = 2) {
 function time_relative_to_now($seconds)
 {
 	$time = time() - $seconds;
-	$relative_time = RelativeTime($time);
+	$relative_time = RelativeTime(abs($time));
 
 	// Time is in the past
 	if ($time > 0)
