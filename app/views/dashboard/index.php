@@ -6,7 +6,7 @@
 	<div class="span4">
 		<legend>Hardware breakdown</legend>
 		<?$machine = new Machine();
-			$sql = "select count(id) as count, machine_desc from machine group by machine_desc";
+			$sql = "select count(id) as count, machine_desc from machine group by machine_desc ORDER BY count DESC";
 			?>
 		<table class="table table-striped table-condensed table-bordered">
 			<?foreach($machine->query($sql) as $obj):?>
@@ -63,27 +63,31 @@
 	<div class="span4">
 		<legend><a href="<?=url('clients/warranty')?>">Warranty status</a></legend>
 		<?$warranty = new Warranty();
-			$sql = "select count(id) as count, status from warranty group by status ORDER BY status";
+			$sql = "SELECT COUNT(id) as count, status FROM warranty GROUP BY status ORDER BY status";
 			?>
 		<table class="table table-striped table-condensed table-bordered">
 			<?foreach($warranty->query($sql) as $obj):?>
 			<tr>
 				<td>
+					<a href="<?php echo url('clients/warranty/' . $obj->status);?>">
 					<?=$obj->status?>
 					<span class="badge pull-right"><?=$obj->count?></span>
+				</a>
 				</td>
 			</tr>
 			<?endforeach?>
 		</table>
-		<?	$thirtydays = date('Y-m-d', strtotime('+30days'));
-			$sql = "select count(id) as count, status from warranty WHERE end_date < '$thirtydays' AND status != 'Expired' AND end_date != '' group by status ORDER BY status";
+		<?php
+			$sql = "SELECT COUNT(id) as count, status FROM warranty WHERE DATE(end_date) <= DATE('now', '+1 month') AND status != 'Expired' AND end_date != '' GROUP BY status ORDER BY status";
 		?>
 		<table class="table table-striped table-condensed table-bordered">
 			<?foreach($warranty->query($sql) as $obj):?>
 			<tr class="warning">
 				<td>
+					<a href="<?php echo url('clients/warranty/expires_soon');?>">
 					Expires in 30 days
-					<span class="badge pull-right"><?=$obj->count?></span>
+					<span class="badge badge-warning pull-right"><?=$obj->count?></span>
+				</a>
 				</td>
 			</tr>
 			<?endforeach?>

@@ -26,7 +26,7 @@
 
   <legend>Warranty Reports <span class='badge badge-info'><?=count($warranty)?></span></legend>
   
-  <table class="table table-striped">
+  <table class="table table-striped table-condensed table-bordered">
     <thead>
       <tr>
         <th>Client    </th>
@@ -42,11 +42,12 @@
 	<?foreach($warranty as $client):?>
 	<?$class = $client->status == 'Expired' ? 'important' : ($client->status == 'Supported' ? 'success' : 'warning');
 	$timediff = strtotime($client->end_date) - time(); 
-	if($timediff < $thirty){ $class = 'important';}?>
+	if($timediff < $thirty){ $class = 'warning';}?>
       <tr>
 		<?$machine = new Machine($client->sn)?>
         <td>
-			<a href="<?=url("clients/detail/$client->sn")?>"><?=$machine->computer_name?></a>
+			<a href="<?=url("clients/detail/$client->sn")?>"><?=(
+				$machine->computer_name != '' ? $machine->computer_name : $machine->serial_number)?></a>
 		</td>
 		<td><?=$machine->serial_number?></td>
 		<td><?=$machine->hostname?></td>

@@ -31,13 +31,13 @@
 ?>
   <tr>
     <td>
-        <a href="<?=url("inventory/detail/$inventory->serial")?>"><?=$machine->computer_name?></a>
+        <a href="<?=url("inventory/detail/$inventory->serial")?>"><?=($machine->computer_name != '' ? $machine->computer_name : $inventory->serial)?></a>
     </td>
     <td><?=$reportdata->console_user?></td>
     <td><?=$reportdata->remote_ip?></td>
     <td><?=$machine->os_version?></td>
     <td>
-        <?=date('Y-M-d H:i:s', $inventory->timestamp)?>
+        <?=strftime('%x %r %Z', $inventory->timestamp)?>
     </td>
   </tr>
 <?endforeach?>
