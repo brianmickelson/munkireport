@@ -5,18 +5,16 @@ function _index()
 	$controller = KISS_Controller::get_instance();
 
 	$inventory_item_obj = new InventoryItem();
-	$items = $inventory_item_obj->select('DISTINCT serial, name, version');
+	$items = $inventory_item_obj->select('name, version, COUNT(id) AS num_installs', '1 GROUP BY name');
+	
 	$inventory = array();
 	foreach($items as $item)
 	{
-		if(!isset($inventory[$item['name']][$item['version']]))
-		{
-			$inventory[$item['name']][$item['version']] = 1;
-		}
-		else
-		{
-			$inventory[$item['name']][$item['version']]++;
-		}
+		$name = $item['name'];
+		$version = $item['version'];
+		$installs = $item['num_installs'];
+
+		$inventory[$name][$version] = $installs;
 	}
 	$controller->set('inventory', $inventory);
 }
