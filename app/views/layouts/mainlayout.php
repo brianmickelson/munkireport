@@ -5,13 +5,9 @@
   <title><?php echo $layout_page_title == '' ? Config::get('siteName') : $layout_page_title?></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script type="text/javascript" src="<?php echo WEB_FOLDER;?>assets/js/jquery.js"></script>
-  <script type="text/javascript" src="<?php echo WEB_FOLDER;?>/assets/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="<?php echo WEB_FOLDER;?>/assets/js/jquery.dataTables.min.js"></script>
-  <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-  </style>
+  <script type="text/javascript" src="<?php echo WEB_FOLDER;?>assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="<?php echo WEB_FOLDER;?>assets/js/DataTables/media/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="<?php echo WEB_FOLDER;?>assets/js/DataTables/media/js/jquery.dataTables.bootstrap.js"></script>
 <?php
 
 
@@ -19,11 +15,11 @@ $controller = KISS_Controller::get_instance();
 
 
 $layout_styles = array_merge($layout_styles, array(
-  "bootstrap.min.css",
-  "style.css",
-  "bootstrap-responsive.min.css",
   "dataTables-bootstrap.css",
-  "font-awesome"));
+  "bootstrap.min.css",
+  "bootstrap-responsive.min.css",
+  "font-awesome",
+  "style.css"));
 
 // include any specified stylesheets
 foreach ($layout_styles as $style)

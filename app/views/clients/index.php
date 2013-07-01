@@ -8,7 +8,7 @@ $controller->add_script("clients/client_list.js");
 		$('.clientlist').dataTable({
 			"iDisplayLength": 25,
 			"aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
-			"sPaginationType": "full_numbers",
+			"sPaginationType": "bootstrap",
 			"bStateSave": true,
 			"aaSorting": [[4,'desc']]
 		});
@@ -20,7 +20,7 @@ $controller->add_script("clients/client_list.js");
 
   <legend>Machines <span class='badge badge-info'><?=$machine->count()?></span></legend>
   
-  <table class="table table-striped table-condensed table-bordered">
+  <table class="clientlist table table-striped table-condensed table-bordered">
     <thead>
       <tr>
         <th>Client    </th>

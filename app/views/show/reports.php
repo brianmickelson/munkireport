@@ -3,7 +3,7 @@
 		$('.clientlist').dataTable({
 			"iDisplayLength": 25,
 			"aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
-			"sPaginationType": "full_numbers",
+			"sPaginationType": "bootstrap",
 			"bStateSave": true,
 			"aaSorting": [[4,'desc']]
 		});
@@ -40,11 +40,11 @@
 		<?=$machine->rs['computer_name']?>
 		<?endif?>
 	</td>
-	<td><?=$report_data->rs['console_user']?></td>
-	<td><?=$report_data->rs['remote_ip']?></td>
+	<td><?=$report->rs['console_user']?></td>
+	<td><?=$report->rs['remote_ip']?></td>
 	<td><?=$machine->rs['os_version']?> <?=$machine->rs['cpu_arch']?></td>
 	<td>
-		<?=time_relative_to_now($report_data->rs['timestamp']);?>
+		<?=time_relative_to_now(strtotime($report->rs['timestamp']));?>
 		<?=$report_data->rs['runtype']?>
 		<?=$report_data->rs['runstate']?>
 		<?if($report->rs['report_plist']['Errors']):?>

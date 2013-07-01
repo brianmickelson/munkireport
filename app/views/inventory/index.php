@@ -3,6 +3,7 @@
     $(document).ready(function() {
         $('.inventory').dataTable({
             "iDisplayLength": 25,
+            "sPaginationType": "bootstrap",
             "aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
             "bStateSave": true,
             "aaSorting": [[4,'desc']]

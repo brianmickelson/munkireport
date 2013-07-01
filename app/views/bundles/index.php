@@ -2,6 +2,7 @@
     $(document).ready(function() {
         $('.table').dataTable({
             "iDisplayLength": 25,
+            "sPaginationType": "bootstrap",
             "aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
             "bStateSave": true,
             "aaSorting": [[0,'asc']]

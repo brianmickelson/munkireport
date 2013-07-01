@@ -9,11 +9,11 @@
 <span id="errors">
 	<hr />
 	<?if(isset($report['Errors'])):?>
-		<pre class="text-error"><?=implode("\n", $report['Errors'])?></pre>
+		<pre class="text-error">ERRORS<br /><?=implode("\n", $report['Errors'])?></pre>
 	<?endif?>
 	
 	<?if(isset($report['Warnings'])):?>
-	<pre class="text-warning"><?=implode("\n", $report['Warnings'])?></pre>
+	<pre class="text-warning">WARNINGS<br /><?=implode("\n", $report['Warnings'])?></pre>
 	<?endif?>
 	<hr/>
 </span>
@@ -38,14 +38,20 @@
       <tbody>
 		<?foreach($report[$report_key] AS $item):?>
         <tr>
-          <td>
-          	<span class="pull-left"><?=isset($item['install_result']) ? $item['install_result'] : (isset($item['installed']) && $item['installed'] ? 'installed' : "not installed")?>
+          <td><small><?php
+          	$item_is_installed = isset($item['install_result']);
+          	$item_is_installed = $item_is_installed || @$item['installed'];
+          	?>
+          	<span class="pull-left"><i class="<?php
+          		echo $item_is_installed ? "text-success icon-ok" : "text-error icon-remove"?>"></i>&nbsp;
           	</span>
-			<?=isset($item['display_name']) ? $item['display_name'] : $item['name']?>
-			<?=isset($item['version_to_install']) ? $item['version_to_install'] : ''?>
-			<?=isset($item['installed_version']) ? $item['installed_version'] : ''?>
-          </td>
-          <td style="text-align: right;"><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></td>
+			<?=@$item['display_name']?>
+			<span class="muted">
+				<?=@$item['version_to_install']?>
+				<?=@$item['installed_version']?>
+			</span>
+          </small></td>
+          <td><span class="pull-right"><small><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></span></small></td>
         </tr>
 		<?endforeach?>
       </tbody>
@@ -86,10 +92,10 @@
 		        		<i class="icon-remove"></i>
 		          	</span>
 			    	<?php endif;?>
-					<?=isset($item['display_name']) ? $item['display_name'] : $item['name']?>
+					<?=@$item['display_name']?>
 					<span class="muted">
-					<?=isset($item['version_to_install']) ? $item['version_to_install'] : ''?>
-					<?=isset($item['installed_version']) ? $item['installed_version'] : ''?>
+					<?=@$item['version_to_install']?>
+					<?=@$item['installed_version']?>
 					</span>
 		          </td>
 		          <td style="text-align: right;"><?=isset($item['installed_size']) ? humanreadablesize($item['installed_size'] * 1024): '?'?></td>
