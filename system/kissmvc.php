@@ -12,8 +12,19 @@ class Controller extends KISS_Controller
 		$controller = KISS_Controller::get_instance();
 		$actionName = $controller->action;
 		$controllerName = $controller->controller;
+
+		if (Config::install_mode())
+		{
+			// The Config class says we're in installation mode, so let's make
+			// sure the user knows what needs to be done.
+			if ($controllerName != 'install')
+			{
+				$controller->redirect('install');
+			}
+			return;
+		}
+
 		$allowed_routes = array(
-			"install/index",
 			"install/script",
 			"install/plist",
 			"report/hash_check",
