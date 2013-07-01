@@ -52,7 +52,7 @@ foreach ($layout_styles as $style)
               <i class="icon-group"></i> Clients
             </a>
           </li>
-          <li <?=$route == 'show/reports' ? "class='active'" : '';?>>
+          <li <?=$controller_name == 'show' ? "class='active'" : '';?>>
             <a href="<?php echo url('show/reports');?>">
               <i class="icon-bar-chart"></i> Reports
             </a>
