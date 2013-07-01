@@ -74,13 +74,55 @@ foreach ($layout_styles as $style)
 
 
   <div class="container">
-    <!--<div class="row">-->
-      <?php echo $layout_content; ?>
-    <!--</div>-->
+    <?php echo $layout_content;?>
+
+    <div class="navbar navbar-static-bottom">
+      <div class="navbar-inner">
+        <ul class="nav">
+          <li>
+            <p class="navbar-text">
+              <small>MunkiReport version <?=$GLOBALS['version']?></small>
+            </p>
+          </li>
+          <?php
+              $controller_name = $controller->controller;
+              $action_name = $controller->action;
+              $params = $controller->params;
+              $param_string = '';
+              for($i = 0; $i < count($params); $i++)
+              {
+                $param_string .= "/" . urlencode($params[$i]);
+              }
+              $view_dir = Config::get('paths.view') . $controller_name . "/";
+              $formats = array();
+              foreach(array_filter(glob($view_dir . "/*"), 'is_dir') as $dir)
+              {
+                if (file_exists($dir . "/" . $action_name . ".php"))
+                {
+                  $format = basename($dir);
+                  $formats[] = "<a href='" . url(
+                      $controller_name
+                      . "/" . $action_name . $param_string
+                      . "." . $format)
+                    . "'>" . $format . "</a>";
+                }
+              }
+              if (count($formats) > 0)
+              {
+                echo '<li class="divider-vertical"></li>
+                      <li>
+                        <p class="navbar-text">
+                        <small>This page is available in: '
+                      . implode(', ', $formats)
+                      . '</small></p></li>';
+              }
+              ?>
+          </li>
+        </ul>
+      </div>
+    </div>
+
   </div>
-<div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">
-  <i>MunkiReport version <?=$GLOBALS['version']?></i>
-</div>  
 <?php
 
 

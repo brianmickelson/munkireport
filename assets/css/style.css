@@ -39,3 +39,9 @@ div.widget-content
   height: 200px;
   overflow: auto;
 }
+
+
+div.navbar-static-bottom 
+{
+  margin-top: 50px;
+}
