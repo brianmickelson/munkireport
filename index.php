@@ -6,6 +6,7 @@ define('FC', __FILE__ .'/' );
 
 define('APP_ROOT', __DIR__ .'/' );
 
+
 //===============================================
 // Include config
 //===============================================
@@ -49,6 +50,7 @@ define('EXT', '.php'); // Default extension
 // Debug
 //===============================================
 ini_set('display_errors', Config::get('debugModeEnabled') ? 'On' : 'Off' );
+ini_set('display_startup_errors', Config::get('debugModeEnabled'));
 error_reporting( Config::get('debugModeEnabled') ? E_ALL : 0 );
 
 //===============================================
