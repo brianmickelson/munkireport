@@ -8,6 +8,7 @@ class Machine extends Model {
 		$this->rs['serial_number'] = $serial;
 			$this->rt['serial_number'] = 'VARCHAR(255) UNIQUE';
 		$this->rs['hostname'] = '';
+		$this->rs['available_disk_space'] = 0;
 		$this->rs['machine_model'] = '';
 		$this->rs['machine_desc'] = '';
 		$this->rs['img_url'] = '';
