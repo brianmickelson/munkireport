@@ -46,12 +46,16 @@ class ConfigDefaults
 	}
 
 
+
+
+	public function settings()
+	{
+		return $this->_settings;
+	}
+
+
 	public function writeDefaultValues()
 	{
-		if (is_writable(dirname(SETTINGS_FILE)) == FALSE)
-			throw new Exception(SETTINGS_FILE . " is not writable by the webserver.");
-		
-		require_once(__DIR__ . "/Plist.php");
 		Plist::writeToXMLFile( $this->_settings, SETTINGS_FILE );
 	}
 }

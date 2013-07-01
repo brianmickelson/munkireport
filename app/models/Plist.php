@@ -11,7 +11,6 @@ class Plist
 	{
 		if (!is_file($aFile) || !is_readable($aFile))
 		{
-			echo $aFile;
 			return array();
 		}
 
@@ -33,10 +32,7 @@ class Plist
 
 
 	public static function writeToFile($data, $aFile, $useXML = TRUE)
-	{
-		if (is_writable(dirname($aFile)) == FALSE)
-			throw new Exception("The webserver doesn't have adequate permissions to write to the file '" . $aFile . "'");
-		
+	{	
 		$td = new CFTypeDetector();
 		$structure = $td->toCFType( $data );
 		$plist = new CFPropertyList();
@@ -44,7 +40,10 @@ class Plist
 		if ($useXML == TRUE)
 		{
 			$xml = $plist->toXML(TRUE);
-			file_put_contents($aFile, $xml);
+			if ( ! @file_put_contents($aFile, $xml))
+			{
+				trigger_error("The webserver doesn't have adequate permissions to write to the file '" . $aFile . "'", E_USER_WARNING);
+			}
 		}
 		else
 			$plist->saveBinary($aFile);

@@ -26,6 +26,40 @@ OTHER DEALINGS IN THE SOFTWARE.
 *****************************************************************/
 
 
+
+
+
+
+
+
+/**
+ * If error_reporting() returns 0, exceptions are caught and then silenced.
+ * Otherwise, exceptions are formatted and redirected to the 'error'
+ * controller's _500() function and view.
+ */
+function kissmvc_exception_handler($exception)
+{
+	//if (error_reporting() === 0)
+	//	return;
+	$controller = KISS_Controller::get_instance();
+	$controller->controller = 'error';
+	$controller->action = '500';
+	$controller->set('exception', $exception);
+	$controller->render_view();
+}
+
+
+function kissmvc_error_handler($errno, $errstr, $errfile, $errline, $errcontext)
+{
+	//throw new RuntimeException($errstr, $errno);
+}
+set_exception_handler('kissmvc_exception_handler');
+set_error_handler('kissmvc_error_handler', E_ALL);
+
+
+
+
+
 //===============================================================
 // Controller
 // Parses the HTTP request and routes to the appropriate function
@@ -434,23 +468,3 @@ class KISS_Controller
 		return $result;
 	}
 }
-
-
-
-
-/**
- * If error_reporting() returns 0, exceptions are caught and then silenced.
- * Otherwise, exceptions are formatted and redirected to the 'error'
- * controller's _500() function and view.
- */
-function kissmvc_exception_handler($exception)
-{
-	if (error_reporting() === 0)
-		return;
-	$controller = KISS_Controller::get_instance();
-	$controller->controller = 'error';
-	$controller->action = '500';
-	$controller->set('exception', $exception);
-	$controller->render_view();
-}
-set_exception_handler('kissmvc_exception_handler');
