@@ -6,9 +6,14 @@ function _index($return = '')
 	$check = FALSE;
 	$controller = KISS_Controller::get_instance();
 	$mechanisms = array('config');
+
+	if ( count($_POST) == 0 && !isset($_SESSION['auth_success_redirect']))
+	{
+		$_SESSION['auth_success_redirect'] = $_SERVER['HTTP_REFERER'];
+	}
 	
-	$login = isset($_POST['login']) ? $_POST['login'] : '';
-	$password = isset($_POST['password']) ? $_POST['password'] : '';
+	$login = @$_POST['login'];
+	$password = @$_POST['password'];
 	
 	$controller->set('login', $login);
 	$controller->set('url', url('auth/index/' . $return));
@@ -54,7 +59,12 @@ function _index($return = '')
 		{
 			$_SESSION['user'] = $login;
 			$_SESSION['auth'] = $mechanism;
-			$controller->redirect($return);
+			$return = $_SESSION['auth_success_redirect'];
+			unset($_SESSION['auth_success_redirect']);
+
+			// use header() here instead of the KISS_Controller's redirect
+			// method since we need to redirect to a full URL
+			header("Location: " . $return);
 		}
 		
 	}
