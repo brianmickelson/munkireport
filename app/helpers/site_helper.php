@@ -155,5 +155,5 @@ function RelativeTime($time)
 
 function safe_array_fetch($array, $key, $default = null)
 {
-	return isset($array[$key]) ? $array[$key] : $default;
+	return isset($array[$key]) && ! empty($array[$key]) ? $array[$key] : $default;
 }
