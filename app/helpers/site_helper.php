@@ -9,6 +9,25 @@ function custom_error($msg='')
 	die(View::do_fetch(APP_PATH.'errors/custom_error.php',$vars));
 }
 
+
+
+
+function formatted_count($array)
+{
+	return number_format(count($array));
+}
+
+
+
+function vnc_link($ip = '')
+{
+	if ($ip == '')
+		return null;
+	return sprintf(Config::get('vnc_link'), $ip);
+}
+
+
+
 //===============================================
 // Database
 //===============================================
@@ -69,9 +88,14 @@ function redirect($uri = '', $method = 'location', $http_response_code = 302)
 }
 
 function humanreadablesize($bytes, $decimals = 2) {
-	$sz = 'BKMGTP';
-	$factor = floor((strlen($bytes) - 1) / 3);
-	return sprintf("%.{$decimals}f %sB", $bytes / pow(1024, $factor), $factor?@$sz[$factor]:' ');
+	$suffix = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+	$idx = 0;
+	while($bytes > 1024)
+	{
+		$bytes = $bytes / 1024;
+		$idx++;
+	}
+	return round($bytes, $decimals) . $suffix[$idx];
 }
 
 
