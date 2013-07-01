@@ -21,7 +21,8 @@ $controller->add_script("clients/client_list.js");
       <tr>
         <th>Client    </th>
         <th>Serial    </th>
-		<th>OS        </th>
+		<th>OS Version</th>
+		<th>IP</th>
         <th>Machine_name</th>
 		<th>Available disk space</th>
       </tr>
@@ -29,22 +30,17 @@ $controller->add_script("clients/client_list.js");
     <tbody>
 	<?foreach($machine_records as $record):?>
       <tr>
-		<?php
-			$remote_ip = $record['munki_report']['remote_ip'];
-			$computer_name = safe_array_fetch(
-				$record,
-				'computer_name',
-				"<i>" . $record['serial_number'] . "</i>");
-		?>
-        <td>
-        	<div class="btn-group">
-        		<span class="btn" data-serialnumber="<?=$client->serial_number?>"><i class="icon-info-sign"></i></span>
-        		<a class="btn<?php echo $remote_ip =='' ? ' disabled' : '';?>" href="<?php echo vnc_link($remote_ip);?>" title="Remote Desktop:<?php echo $remote_ip;?>"><i class="icon-eye-open"></i></a>
-        		<a class="btn" href="<?=url("clients/detail/" . $record['serial_number'])?>"><?=$computer_name?></a>
-        	</div>
+        <td><?php View::do_dump('partials/machine_button_group.php', array(
+        	'serial_number' => $record['serial_number'],
+        	'hostname' => $record['computer_name'],
+        	'ip' => $record['munki_report']['remote_ip'],
+        	'controller_name' => 'clients',
+        	'action_name' => 'detail'
+        ))?>
 		</td>
 		<td><?=$record['serial_number']?></td>
 		<td><?=$record['os_version']?></td>
+		<td><?=$record['munki_report']['remote_ip'];?></td>
 		<td><?=$record['machine_name']?></td>
 		<td><?=humanreadablesize($record['available_disk_space'] * 1024, 0)?></td>
       </tr>

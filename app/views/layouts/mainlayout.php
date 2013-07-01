@@ -12,7 +12,8 @@
 
 
 $controller = KISS_Controller::get_instance();
-
+$controller_name = $controller->controller;
+$route = $controller_name . '/' . $controller->action;
 
 $layout_styles = array_merge($layout_styles, array(
   "dataTables-bootstrap.css",
@@ -30,48 +31,68 @@ foreach ($layout_styles as $style)
 ?>
 </head>
 <body>
-  <?if( isset($_SESSION['user'])):?>
-
-
-      <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="<?=url('')?>"><?=Config::get('siteName')?></a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <?php
-                $page = $controller->controller
-                  . ($controller->action != '' ? '/' . $controller->action : '');
-                $navlist = array( 
-                  'dashboard/index'      => array('th-large', 'Dashboard'), 
-                  'clients/index'   => array('group', 'Clients'), 
-                  'show/reports'    => array('bar-chart', 'Reports'),
-                  'inventory/index' => array('credit-card', 'Inventory'),
-                  'bundles/index' => array('info-sign', 'Bundles'),
-                  'manifests/index' => array('edit', 'Manifests'),
-                  'catalogs/index'  => array('list-alt', 'Catalogs')
-                )?>
-                <?foreach($navlist as $url => $obj):?>
-              <li <?= strpos($url, $controller->controller) === 0 ? 'class="active"' : '' ?>>
-                <a href="<?=url($url)?>"><i class="icon-<?=$obj[0]?>"></i> <?=$obj[1]?></a>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="brand" href="<?=url('')?>"><?=Config::get('siteName')?></a>
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li <?=$controller_name == 'dashboard' ? "class='active'" : '';?>>
+            <a href="<?php echo url('dashboard/index');?>">
+              <i class="icon-th-large"></i> Dashboard
+            </a>
+          </li>
+          <li <?=$controller_name == 'clients' ? "class='active'" : '';?>>
+            <a href="<?php echo url('clients/index');?>">
+              <i class="icon-group"></i> Clients
+            </a>
+          </li>
+          <li <?=$route == 'show/reports' ? "class='active'" : '';?>>
+            <a href="<?php echo url('show/reports');?>">
+              <i class="icon-bar-chart"></i> Reports
+            </a>
+          </li>
+          <li class='dropdown <?=$controller_name == 'inventory' ? "active" : '';?>'>
+            <a class='dropdown-toggle' href="#" data-toggle='dropdown'>
+              <i class="icon-info-sign"></i> Inventory
+              <b class="caret"></b>
+            </a>
+            <ul class='dropdown-menu'>
+              <li>
+                <a href="<?php echo url('inventory/bundles');?>">
+                  Application Bundles
+                </a>
               </li>
-                <?endforeach?>
+              <li>
+                <a href="<?php echo url('inventory/index');?>">
+                  Machines
+                </a>
+              </li>  
             </ul>
-            <form class="navbar-form pull-right">
-              <a class="btn" href="<?=url('auth/logout')?>">Logout</a>
-            </form>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
+          </li>
+          <li <?=$controller_name == 'manifests' ? "class='active'" : '';?>>
+            <a href="<?php echo url('manifests/index');?>">
+              <i class="icon-edit"></i> Manifests
+            </a>
+          </li>
+          <li <?=$controller_name == 'catalogs' ? "class='active'" : '';?>>
+            <a href="<?php echo url('catalogs/index');?>">
+              <i class="icon-list-alt"></i> Catalogs
+            </a>
+          </li>
+        </ul>
+        <form class="navbar-form pull-right">
+          <a class="btn" href="<?=url('auth/logout')?>">Logout</a>
+        </form>
+      </div><!--/.nav-collapse -->
     </div>
-
-  <?endif?>
-
+  </div>
+</div>
 
   <div class="container">
     <?php echo $layout_content;?>

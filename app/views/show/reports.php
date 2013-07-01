@@ -19,7 +19,7 @@
     <th>Client    </th>
     <th>User      </th>
     <th>IP        </th>
-	<th>OS        </th>
+	<th>OS Version</th>
     <th>Latest Run</th>
 	<th>Manifest</th>
   </tr>
@@ -33,16 +33,17 @@
 ?>
   <tr>
     <?$url = url("show/report/" . $machine->serial_number)?>
-    <td>
-		<?if($report->report_plist):?>
-		<a href="<?=$url?>"><?=$machine->computer_name?></a>
-		<?else:?>
-		<?=$machine->computer_name?>
-		<?endif?>
+    <td><?php View::do_dump('partials/machine_button_group.php', array(
+        	'serial_number' => $machine->serial_number,
+        	'hostname' => $machine->computer_name,
+        	'ip' => $report->remote_ip,
+        	'controller_name' => 'show',
+        	'action_name' => 'report'
+        ))?>
 	</td>
 	<td><?=$report->console_user?></td>
 	<td><?=$report->remote_ip?></td>
-	<td><?=$machine->os_version?> <?=$machine->cpu_arch?></td>
+	<td><?=$machine->os_version?></td>
 	<td>
 		<?=time_relative_to_now(strtotime($report->timestamp));?>
 		<?=$report_data->runtype?>

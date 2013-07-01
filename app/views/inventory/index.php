@@ -16,10 +16,10 @@
 <table class="table table-striped inventory table-condensed table-bordered">
 <thead>
   <tr>
-    <th>Hostname    </th>
+    <th>Client      </th>
     <th>Console User</th>
     <th>IP          </th>
-    <th>OS          </th>
+    <th>OS Version  </th>
     <th>Last Inventory</th>
   </tr>
 </thead>
@@ -28,11 +28,16 @@
 <?foreach($inventory_items as $inventory):?>
   <?
     $machine = new Machine($inventory->serial);
-    $reportdata = new Reportdata($inventory->serial);
+    $reportdata = new Munkireport($inventory->serial);
 ?>
   <tr>
-    <td>
-        <a href="<?=url("inventory/detail/$inventory->serial")?>"><?=($machine->computer_name != '' ? $machine->computer_name : $inventory->serial)?></a>
+    <td><?php View::do_dump('partials/machine_button_group.php', array(
+            'serial_number' => $machine->serial_number,
+            'hostname' => $machine->computer_name,
+            'ip' => $reportdata->remote_ip,
+            'controller_name' => 'inventory',
+            'action_name' => 'detail'
+        ))?>
     </td>
     <td><?=$reportdata->console_user?></td>
     <td><?=$reportdata->remote_ip?></td>
