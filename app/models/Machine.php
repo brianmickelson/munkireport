@@ -92,8 +92,9 @@ class Machine extends Model {
 				ON diskreport.serial_number = machine.serial_number
 			LEFT JOIN munkireport
 				ON munkireport.serial = machine.serial_number"
-		. ($serial != '' ? ' WHERE machine.serial_number = ' . $serial : '')
-		. " GROUP BY machine.serial_number";
+		. ($serial != '' ? ' WHERE (machine.serial_number = "' . $serial . '")' : '')
+		. " GROUP BY machine.serial_number"
+		. ($serial != '' ? ' LIMIT 0,1' : '');
 		return $this->query($sql);
 	}
 }
