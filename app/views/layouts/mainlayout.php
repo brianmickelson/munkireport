@@ -113,7 +113,7 @@ foreach ($layout_styles as $style)
               $param_string = '';
               for($i = 0; $i < count($params); $i++)
               {
-                $param_string .= "/" . urlencode($params[$i]);
+                $param_string .= "/" . rawurlencode($params[$i]);
               }
               $view_dir = Config::get('paths.view') . $controller_name . "/";
               $formats = array();

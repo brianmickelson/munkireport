@@ -327,16 +327,34 @@ class KISS_Controller
 	 * This function parses the HTTP request to get the controller name, action
 	 * name and parameter array.
 	 */
-	private function parse_http_request() {
+	private function parse_http_request()
+	{
 		$this->params = array();
 		$p = $this->request_uri_parts;
 		if (isset($p[0]) && $p[0])
-			$this->controller=$p[0];
+			$this->controller = $p[0];
+		
 		if (isset($p[1]) && $p[1])
-			$this->action=$p[1];
+			$this->action = $p[1];
+		
 		if (isset($p[2]))
-			$this->params=array_slice($p,2);
+		{
+			$this->params = array_slice($p,2);
+			$this->_decode_params_array();
+		}
+		
 		$this->_discover_view_format();
+	}
+
+
+
+
+	protected function _decode_params_array()
+	{
+		foreach($this->params as &$param)
+		{
+			$param = rawurldecode($param);
+		}
 	}
 
 
