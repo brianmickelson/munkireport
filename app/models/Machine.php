@@ -56,5 +56,44 @@ class Machine extends Model {
 		$this->merge($mylist)->save();
 	}
 
-	
+
+
+
+	/**
+	 * Returns all machines along with some select data from the reportdata 
+	 * and hash tables.
+	 *
+	 * If a serial number is provided, this method will only return 0 or 1 
+	 * result(s).
+	 */
+	public function expanded_machines($serial = '')
+	{
+		$sql = "SELECT
+			machine.*,
+			COALESCE(
+				reportdata.long_username,
+				munkireport.console_user,
+				reportdata.console_user,
+				'<None>'
+			) AS console_user,
+			munkireport.remote_ip,
+			munkireport.timestamp AS munki_timestamp,
+			hash.timestamp AS inventory_timestamp,
+			diskreport.TotalSize AS diskreport_totalsize,
+			diskreport.FreeSpace AS diskreport_freespace,
+			diskreport.SMARTStatus AS diskreport_smart_status,
+			diskreport.solidstate AS diskreport_solidstate
+		FROM machine
+			LEFT JOIN reportdata
+				ON reportdata.serial = machine.serial_number
+			LEFT JOIN hash
+				ON hash.serial = machine.serial_number
+			LEFT JOIN diskreport
+				ON diskreport.serial_number = machine.serial_number
+			LEFT JOIN munkireport
+				ON munkireport.serial = machine.serial_number"
+		. ($serial != '' ? ' WHERE machine.serial_number = ' . $serial : '')
+		. " GROUP BY machine.serial_number";
+		return $this->query($sql);
+	}
 }
