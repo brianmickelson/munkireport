@@ -42,9 +42,9 @@ function get_class(anObject)
 			options = $.extend(true, options, {
 				//ilftp
 				'sDom': '<"pull-left"<"clearfix"l><"clearfix muted"i>><"pull-right"fp>tp<"muted"i>',
-				'iDisplayLength': 15,
+				'iDisplayLength': 25,
 				'sPaginationType': 'bootstrap',
-				'aLengthMenu': [[25, 50, -1], [25, 50, "All"]],
+				'aLengthMenu': [[15, 25, 50, -1], [15, 25, 50, "All"]],
 				'bStateSave': false,
 				'bDeferRender': true
 			});
