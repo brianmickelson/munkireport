@@ -448,7 +448,7 @@ class KISS_Controller
 	 *
 	 * @param String $msg The message to display to the end user.
 	 */
-	private function request_not_found($msg = '')
+	public function request_not_found($msg = '')
 	{
 		if ($this->controller != 'error' && $this->action != '404')
 		{
@@ -458,6 +458,7 @@ class KISS_Controller
 			$this->set("error_message", $msg);
 			$this->prevent_render = FALSE;
 			$this->render_view();
+			exit;
 		}
 		else
 		{
