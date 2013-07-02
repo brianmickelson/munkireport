@@ -29,26 +29,31 @@ $(document).ready(function()
 
 
 
-	var format_name_column = function(rowObject)
+	var format_name_column = function(val, type, row)
 	{
-		var name = rowObject.aData['name'];
-		return '<a href="bundle/' + encodeURIComponent(name)
-			+ '">' + name + "</a>";
+		if (type != 'display')
+			return val.replace(/^[^a-zA-Z0-9]*/, '');
+
+		return '<a href="bundle/' + encodeURIComponent(val)
+			+ '">' + htmlspecialchars(val) + "</a>";
 	}
 
 
 
 
-	var format_versions_column = function(rowObject)
+	var format_versions_column = function(val, type, row)
 	{
-		var v = rowObject.aData['versions'],
+		if (type != 'display')
+			return row['versions'][0][0];
+
+		var v = row['versions'],
 			out = ''
 		for(var i = 0; i < v.length; i++)
 		{
 			var version = v[i][0],
 				count = v[i][1];
 			out += version_count_template(
-				rowObject.aData['name'],
+				row['name'],
 				v[i][0],
 				v[i][1]
 			);
@@ -61,17 +66,15 @@ $(document).ready(function()
 		"sAjaxSource": window.location.href + ".json",
 		"fnServerData": process_json,
         "aaSorting": [[4,'desc']],
-        "aoColumns": [
-        	{'mData': 'name'},
-        	{'mData': 'versions'}
-        ],
         "aoColumnDefs": [
 	        {
-        		'fnRender': format_name_column,
+	        	'mData': 'name',
+        		'mRender': format_name_column,
         		'aTargets': [0]
         	},
         	{
-        		'fnRender': format_versions_column,
+        		'mData': 'versions',
+        		'mRender': format_versions_column,
         		'aTargets': [1]
         	}
         ]
