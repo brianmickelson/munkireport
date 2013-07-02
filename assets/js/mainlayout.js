@@ -25,7 +25,7 @@ function get_class(anObject)
 
 
 /*
-	This next colsure moves dataTables aside and so it can respond to
+	This next closure moves dataTables aside and so it can respond to
 	new instance requests instead. This allows us to set some default
 	options for all dataTable instances, site-wide.
  */
@@ -39,15 +39,16 @@ function get_class(anObject)
 	{
 		if(typeof options === "object")
 		{
-			options = $.extend(true, options, {
-				//ilftp
+			options = $.extend(
+			{
 				'sDom': '<"pull-left"<"clearfix"l><"clearfix muted"i>><"pull-right"fp>tp<"muted"i>',
 				'iDisplayLength': 25,
 				'sPaginationType': 'bootstrap',
 				'aLengthMenu': [[15, 25, 50, -1], [15, 25, 50, "All"]],
 				'bStateSave': false,
-				'bDeferRender': true
-			});
+				'bDeferRender': true,
+				"aaSorting": [[0,'asc']],
+			}, options);
 		}
 
 		// Initialize and return the original dataTables function with our 
