@@ -9,7 +9,7 @@ function get_class(anObject)
 
 
 
-// Performs something akind to PHP's htmlspecialchars() function.
+// Performs something akin to PHP's htmlspecialchars() function.
  function htmlspecialchars(aString)
 {
 	if (aString == undefined || get_class(aString) != '[object String]')
