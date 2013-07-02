@@ -22,12 +22,22 @@ class Inventoryitem extends Model {
     }
 
 
-    public function all_versions($name = "")
+    /**
+     * Returns all inventory items grouped by their version and including an 
+     * install count for each version found. If the parameters are not empty,
+     * only an array of versions and install counts are returned since it is 
+     * assumed the caller already knows the rest of the values.
+     */
+    public function all_versions($name = null)
     {
-        $name_query = $name == "" ? "1 " : "name = ? ";
-        
-        return $this->select('name, version, COUNT(id) AS num_installs',
-            $name_query . 'GROUP BY name, version ORDER BY name ASC, COUNT(id) DESC',
+        if ($name == null)
+        {
+            return $this->select('name, version, COUNT(id) AS num_installs',
+                '1 GROUP BY name, version ORDER BY name ASC, COUNT(id) DESC');
+        }
+
+        return $this->select('version, COUNT(id) AS num_installs',
+            'name = ? GROUP BY name, version ORDER BY name ASC, COUNT(id) DESC',
             $name
         );
     }
