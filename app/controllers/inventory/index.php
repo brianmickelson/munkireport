@@ -4,7 +4,12 @@
 function _index()
 {
 	$controller = KISS_Controller::get_instance();
-	$hash = new Hash();
-	$items = $hash->retrieve_many('name =? ORDER BY timestamp DESC', 'InventoryItem');
-	$controller->set('inventory_items', $items);
+	
+	// only perform the query if we're rendering HTML since Datatables is
+	// going to come right back to grab the json payload.
+	if ($controller->view_format == '')
+		return;
+
+	$machine_obj = new Machine();
+	$controller->set('machines', $machine_obj->expanded_machines());
 }

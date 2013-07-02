@@ -24,11 +24,10 @@ class Inventoryitem extends Model {
 
     public function all_versions($name = "")
     {
-        return $this->select(
-            "version, COUNT(version) AS num",
-            "name = ? GROUP BY version",
-            array($name)
-        );
+        $name = $name == "" ? "1 " : "name = ? ";
+        
+        return $this->select('name, version, COUNT(id) AS num_installs',
+            $name . 'GROUP BY name, version ORDER BY name ASC, COUNT(id) DESC');
     }
         
     function delete_set( $serial ) 

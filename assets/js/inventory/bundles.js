@@ -1,6 +1,6 @@
 /*
 	This script is used on the inventory/bundles route to handle loading the
-	table data via json. It also formats the columns so each value os clickable
+	table data via json. It also formats the columns so each value is clickable
  */
 $(document).ready(function()
 {
@@ -60,10 +60,6 @@ $(document).ready(function()
 	$("#bundles-table").dataTable({
 		"sAjaxSource": window.location.href + ".json",
 		"fnServerData": process_json,
-		"iDisplayLength": 15,
-        "sPaginationType": "bootstrap",
-        "aLengthMenu": [[25, 50, -1], [25, 50, "All"]],
-        "bStateSave": true,
         "aaSorting": [[4,'desc']],
         "aoColumns": [
         	{'mData': 'name'},

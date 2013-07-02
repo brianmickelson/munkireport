@@ -9,7 +9,7 @@ function _bundles()
 		return;
 
 	$inventory_item_obj = new InventoryItem();
-	$items = $inventory_item_obj->select('name, version, COUNT(id) AS num_installs', '1 GROUP BY name, version ORDER BY name ASC, num_installs DESC');
+	$items = $inventory_item_obj->all_versions();
 	unset($inventory_item_obj);
 
 
