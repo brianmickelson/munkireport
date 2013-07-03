@@ -99,15 +99,21 @@ class KISS_Controller
 			throw new Exception('KISS_Controller is a singleton. Please use KISS_Controller::get_instance() to access the controller instance.');
 
 		self::$_instance = $this;
-		$this->default_route = $default_controller . "/" . $default_action;
-		$this->controller_path=$controller_path;
-		$this->web_folder=$web_folder;
-		$this->controller=$default_controller;
-		$this->action=$default_action;
+		if (defined("KISS_PREVENT_RENDER"))
+			$this->prevent_render(TRUE);
+
+		$this->default_route   = $default_controller . "/" . $default_action;
+		$this->controller_path = $controller_path;
+		$this->web_folder      = $web_folder;
+		$this->controller      = $default_controller;
+		$this->action          = $default_action;
 		$this->explode_http_request();
 		$this->parse_http_request();
-		$this->before_route();
-		$this->route_request();
+		if ( ! defined("KISS_PREVENT_ROUTE"))
+		{
+			$this->before_route();
+			$this->route_request();
+		}
 	}
 
 
