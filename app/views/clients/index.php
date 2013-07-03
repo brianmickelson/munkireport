@@ -1,7 +1,7 @@
 <?php
 
 $controller = KISS_Controller::get_instance();
-$controller->add_script("clients/client_list.js");
+$controller->add_script("clients/detail_popover.js");
 ?>
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {

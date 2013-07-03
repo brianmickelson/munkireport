@@ -9,10 +9,7 @@ $(document).ready(function()
 	var process_json = function( sSource, aoData, fnCallback )
 	{
 		$.getJSON( sSource, function(json, status, jqXHR)
-		{
-			// update the count info badge
-			$("#machines-count-badge").text(json.length);
-
+		{			
 			// let datatables do its thing.
 			fnCallback( {'aaData': json} );
 		});
@@ -85,7 +82,6 @@ $(document).ready(function()
 	$("#machines-table").dataTable({
 		"sAjaxSource": window.location.href + ".json",
 		"fnServerData": process_json,
-		"aaSorting": [[0,'desc']],
 		"aoColumnDefs": [
 			{
 				// Setup some hidden columns that we just want for searching

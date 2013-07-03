@@ -31,7 +31,7 @@
       </thead>
       <tbody>
       <? foreach($inventory_items as $item): ?>
-      <?php $name_url=url('/bundles/detail/'. rawurlencode($item->name)); ?>
+      <?php $name_url=url('/inventory/bundle/'. rawurlencode($item->name)); ?>
       <?php $vers_url=$name_url . '/' . rawurlencode($item->version); ?>
         <tr>
           <td><a href='<?=$name_url?>'><?=$item->name?></a></td>

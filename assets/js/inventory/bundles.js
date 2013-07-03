@@ -18,9 +18,6 @@ $(document).ready(function()
 	{
 		$.getJSON( sSource, function(json, status, jqXHR)
 		{
-			// update the count info badge
-			$("#bundles-count-badge").text(json.length);
-
 			// let datatables do its thing.
 			fnCallback( {'aaData': json} );
 		});
@@ -65,18 +62,17 @@ $(document).ready(function()
 	$("#bundles-table").dataTable({
 		"sAjaxSource": window.location.href + ".json",
 		"fnServerData": process_json,
-        "aaSorting": [[4,'desc']],
-        "aoColumnDefs": [
-	        {
-	        	'mData': 'name',
-        		'mRender': format_name_column,
-        		'aTargets': [0]
-        	},
-        	{
-        		'mData': 'versions',
-        		'mRender': format_versions_column,
-        		'aTargets': [1]
-        	}
-        ]
+		"aoColumnDefs": [
+			{
+				'mData': 'name',
+				'mRender': format_name_column,
+				'aTargets': [0]
+			},
+			{
+				'mData': 'versions',
+				'mRender': format_versions_column,
+				'aTargets': [1]
+			}
+		]
 	});
 });

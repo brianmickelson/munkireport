@@ -8,7 +8,7 @@
   <script type="text/javascript" src="<?php echo WEB_FOLDER;?>assets/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="<?php echo WEB_FOLDER;?>assets/js/DataTables/media/js/jquery.dataTables.js"></script>
   <script type="text/javascript" src="<?php echo WEB_FOLDER;?>assets/js/DataTables/media/js/jquery.dataTables.bootstrap.js"></script>
-  <script type="text/javascript" src="<?php echo WEB_FOLDER;?>assets/js/mainlayout.js"></script>
+  <script type="text/javascript" src="<?php echo WEB_FOLDER;?>assets/js/mainlayout.js.php"></script>
 <?php
 
 
